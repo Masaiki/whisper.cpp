@@ -471,7 +471,17 @@ bool output_wts(struct whisper_context * ctx, const char * fname, const char * f
     return true;
 }
 
+#ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN
+#include "Windows.h"
+#undef WIN32_LEAN_AND_MEAN
+#endif
+
 int main(int argc, char ** argv) {
+#ifdef _WIN32
+    SetConsoleOutputCP(65001);
+#endif
+
     whisper_params params;
 
     if (whisper_params_parse(argc, argv, params) == false) {
